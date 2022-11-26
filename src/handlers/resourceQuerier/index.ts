@@ -1,7 +1,11 @@
-import { Context, APIGatewayProxyCallback, APIGatewayEvent } from 'aws-lambda';
-import { Client } from 'pg';
+import { Context, APIGatewayProxyCallback, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
+import { Client, QueryResult } from 'pg';
 
-const handler = async (event: APIGatewayEvent, context: Context, callback: APIGatewayProxyCallback) => {
+exports.handler = async (
+    event: APIGatewayEvent,
+    context: Context,
+    callback: APIGatewayProxyCallback,
+): Promise<QueryResult> => {
     console.info('ENVIRONMENT VARIABLES\n' + JSON.stringify(process.env, null, 2));
     console.info('EVENT\n' + JSON.stringify(event, null, 2));
     console.info('CONTEXT\n' + JSON.stringify(context, null, 2));
@@ -34,13 +38,15 @@ const handler = async (event: APIGatewayEvent, context: Context, callback: APIGa
     });
 
     const name = event.queryStringParameters?.name;
+    console.info('name: ' + name);
 
     const result = await client.query('SELECT * FROM landlords WHERE name LIKE UPPER(`%${name}%`);');
 
     console.info(result);
 
-    client.end(() => {
+    return result;
+
+    client?.end(() => {
         console.info('the connection has been closed');
     });
 };
-exports.handler = handler;
