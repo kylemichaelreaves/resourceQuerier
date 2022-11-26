@@ -18,7 +18,7 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: src/handlers/resourceQuerier/
-      Handler: src/handlers/resourceQuerier/index.handler
+      Handler: index.handler
       Runtime: nodejs16.x
       Architectures:
         - x86_64
@@ -28,20 +28,21 @@ Resources:
           POWERTOOLS_SERVICE_NAME: resourceQuerierService
           POWERTOOLS_METRICS_NAMESPACE: resourcequerier
           LOG_LEVEL: INFO
+          NODE_OPTIONS: --enable-source-maps
 #      Events:
 #        ResourceQuerier:
 #          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
 #          Properties:
 #            Path: /hello
 #            Method: get
-#    Metadata: # Manage esbuild properties
-#      BuildMethod: esbuild
-#      BuildProperties:
-#        Minify: true
-#        Target: "esnext"
-#        # Sourcemap: true # Enabling source maps will create the required NODE_OPTIONS environment variables on your lambda function during sam build
-#        EntryPoints:
-#        - index.ts
+    Metadata: # Manage esbuild properties
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: "es2020"
+        Sourcemap: true # Enabling source maps will create the required NODE_OPTIONS environment variables on your lambda function during sam build
+        EntryPoints:
+        - index.ts
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

@@ -2,7 +2,7 @@
   "name": "resource_querier",
   "version": "1.0.0",
   "description": "hello world sample for NodeJS",
-  "main": "app.js",
+  "main": "resourceQuerier/index.ts",
   "repository": "https://github.com/awslabs/aws-sam-cli/tree/develop/samcli/local/init/templates/cookiecutter-aws-sam-hello-nodejs",
   "author": "SAM CLI",
   "license": "MIT",
@@ -13,9 +13,9 @@
     "esbuild": "^0.15.15"
   },
   "scripts": {
-    "unit": "../../../node_modules/.bin/jest",
-    "lint": "../../../node_modules/.bin/eslint '*.ts' --quiet --fix",
-    "compile": "../../../node_modules/.bin/tsc",
+    "unit": "../../node_modules/.bin/jest",
+    "lint": "../../node_modules/.bin/eslint '*.ts' --quiet --fix",
+    "compile": "../../node_modules/.bin/tsc",
     "test": "npm run compile && npm run unit"
   },
   "devDependencies": {
