@@ -33,7 +33,9 @@ const handler = async (event: APIGatewayEvent, context: Context, callback: APIGa
         }
     });
 
-    const result = await client.query('SELECT * FROM properties LIMIT 50 OFFSET 50;');
+    const name = event.queryStringParameters?.name;
+
+    const result = await client.query('SELECT * FROM landlords WHERE name LIKE UPPER(`%${name}%`);');
 
     console.info(result);
 

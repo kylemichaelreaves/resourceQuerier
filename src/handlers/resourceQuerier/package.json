@@ -1,5 +1,5 @@
 {
-  "name": "hello_world",
+  "name": "resource_querier",
   "version": "1.0.0",
   "description": "hello world sample for NodeJS",
   "main": "app.js",
@@ -10,12 +10,12 @@
     "@aws-lambda-powertools/logger": "^0.6.0",
     "@aws-lambda-powertools/metrics": "^0.6.0",
     "@aws-lambda-powertools/tracer": "^0.6.0",
-    "esbuild": "^0.14.14"
+    "esbuild": "^0.15.15"
   },
   "scripts": {
-    "unit": "jest",
-    "lint": "eslint '*.ts' --quiet --fix",
-    "compile": "tsc",
+    "unit": "../../../node_modules/.bin/jest",
+    "lint": "../../../node_modules/.bin/eslint '*.ts' --quiet --fix",
+    "compile": "../../../node_modules/.bin/tsc",
     "test": "npm run compile && npm run unit"
   },
   "devDependencies": {
