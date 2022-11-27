@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS SAM CLI Nested Stack for Auto Dependency Layer Creation
+Metadata:
+  SamCliInfo: 1.65.0
+  key: AWS SAM CLI sync command
+Outputs:
+  ResourceQuerierFunctionc39036a8DepLayer:
+    Value:
+      Ref: ResourceQuerierFunctionc39036a8DepLayer
+Resources:
+  ResourceQuerierFunctionc39036a8DepLayer:
+    Metadata:
+      CreatedBy: AWS SAM CLI sync command
+    Properties:
+      CompatibleRuntimes:
+      - nodejs16.x
+      ContentUri: /Users/kylereaves/src/resourceQuerier/.aws-sam/auto-dependency-layer/ResourceQuerierFunctionc39036a8DepLayer
+      Description: Auto created layer for dependencies of function ResourceQuerierFunction
+      LayerName: resourceQuerier-efa853e0-ResourceQuerierFunctioc39036a8-DepLayer
+      RetentionPolicy: Delete
+    Type: AWS::Serverless::LayerVersion
+Transform: AWS::Serverless-2016-10-31

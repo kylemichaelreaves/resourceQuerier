@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'resourceQuerier
+
+  Sample SAM Template for resourceQuerier
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+    Tracing: Active
+  Api:
+    TracingEnabled: true
+Resources:
+  ResourceQuerierFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ResourceQuerierFunction
+      Handler: index.handler
+      Runtime: nodejs16.x
+      Architectures:
+      - x86_64
+      Tracing: Active
+      Environment:
+        Variables:
+          POWERTOOLS_SERVICE_NAME: resourceQuerierService
+          POWERTOOLS_METRICS_NAMESPACE: resourcequerier
+          LOG_LEVEL: INFO
+          NODE_OPTIONS: --enable-source-maps
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+        - index.ts
+        Minify: true
+        Sourcemap: true
+        Target: es2020
+      SamResourceId: ResourceQuerierFunction
+Outputs:
+  ResourceQuerierFunction:
+    Description: Resource Querier Lambda Function ARN
+    Value:
+      Fn::GetAtt:
+      - ResourceQuerierFunction
+      - Arn
+  ResourceQuerierFunctionIamRole:
+    Description: Implicit IAM Role created for Resource Querier function
+    Value:
+      Fn::GetAtt:
+      - ResourceQuerierFunctionRole
+      - Arn
