@@ -1,5 +1,5 @@
-import { Context, APIGatewayProxyCallback, APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
-import { Client, QueryResult } from 'pg';
+import {Context, APIGatewayProxyCallback, APIGatewayEvent, APIGatewayProxyResult} from 'aws-lambda';
+import {Client, QueryResult} from 'pg';
 
 exports.handler = async (
     event: APIGatewayEvent,
@@ -38,9 +38,14 @@ exports.handler = async (
     });
 
     const name = event.queryStringParameters?.name;
-    console.info('name: ' + name);
+    const search = event.queryStringParameters?.search;
 
-    const result = await client.query('SELECT * FROM landlords WHERE name LIKE UPPER(`%${name}%`);');
+    const queryParam = name ? name : search;
+
+    console.info('name: ' + name);
+    console.info('search: ' + search);
+
+    const result = await client.query('SELECT * FROM landlords WHERE name LIKE UPPER($1::text)', [queryParam]);
 
     console.info(result);
 
