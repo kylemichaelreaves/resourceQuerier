@@ -5,7 +5,7 @@ exports.handler = async (
     event: APIGatewayEvent,
     context: Context,
     callback: APIGatewayProxyCallback,
-): Promise<QueryResult> => {
+): Promise<unknown[]> => {
     console.info('ENVIRONMENT VARIABLES\n' + JSON.stringify(process.env, null, 2));
     console.info('EVENT\n' + JSON.stringify(event, null, 2));
     console.info('CONTEXT\n' + JSON.stringify(context, null, 2));
@@ -45,11 +45,11 @@ exports.handler = async (
     console.info('name: ' + name);
     console.info('search: ' + search);
 
-    const result = await client.query('SELECT * FROM landlords WHERE name LIKE UPPER($1::text)', [queryParam]);
+    const result = await client.query('SELECT * FROM landlords WHERE name LIKE $1', [`%${queryParam?.toUpperCase()}%`]);
 
     console.info(result);
 
-    return result;
+    return result.rows;
 
     client?.end(() => {
         console.info('the connection has been closed');
